@@ -1,6 +1,7 @@
 /.vs 
 /ipch
 /Debug
+/Buckland_Chapter7 to 10_Raven/Debug
 *.exe
 *.ilk
 *.pdb
@@ -14,3 +15,4 @@
 *.db
 *.ipch
 *.res 
+*.sbr
