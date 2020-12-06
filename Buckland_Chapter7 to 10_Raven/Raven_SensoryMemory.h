@@ -15,7 +15,7 @@
 #include "2d/vector2d.h"
 
 class Raven_Bot;
-class BaseGameEntity;
+
 
 class MemoryRecord
 {
@@ -84,7 +84,6 @@ private:
   //by UpdateWithSoundSource & UpdateVision)
   void       MakeNewRecordIfNotAlreadyPresent(Raven_Bot* pBot);
 
-  std::map<int, int> m_HittedTargetInfo;
 public:
 
   Raven_SensoryMemory(Raven_Bot* owner, double MemorySpan);
@@ -99,11 +98,6 @@ public:
   //this method iterates through all the opponents in the game world and 
   //updates the records of those that are in the owner's FOV
   void     UpdateVision();
-
-  // 피격된 타겟을 처리하기 위한 함수
-  void     UpdateHittedTarget(BaseGameEntity* pHitted, int id, int reducedHealth);
-  int      GetRecentlyHittedOpponentID() const;
-  void     CleanRecentlyTarget() { m_HittedTargetInfo.clear(); }
 
   bool     isOpponentShootable(Raven_Bot* pOpponent)const;
   bool     isOpponentWithinFOV(Raven_Bot* pOpponent)const;

@@ -2,7 +2,6 @@
 #include "Raven_Bot.h"
 #include "Raven_SensoryMemory.h"
 
-#include "game/EntityManager.h"
 
 
 //-------------------------------- ctor ---------------------------------------
@@ -25,17 +24,6 @@ void Raven_TargetingSystem::Update()
   std::list<Raven_Bot*> SensedBots;
   SensedBots = m_pOwner->GetSensoryMem()->GetListOfRecentlySensedOpponents();
   
-  int targetID = m_pOwner->GetSensoryMem()->GetRecentlyHittedOpponentID();
-  if (targetID != -1)
-  {
-      Raven_Bot* target = (Raven_Bot*)EntityMgr->GetEntityFromID(targetID);
-      if ((target)->isAlive() && (target != m_pOwner))
-      {
-          m_pCurrentTarget = target;
-          return;
-      }
-  }
-
   std::list<Raven_Bot*>::const_iterator curBot = SensedBots.begin();
   for (curBot; curBot != SensedBots.end(); ++curBot)
   {

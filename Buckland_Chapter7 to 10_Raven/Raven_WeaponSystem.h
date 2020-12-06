@@ -18,7 +18,6 @@ class Raven_Bot;
 class Raven_Weapon;
 
 
-#define TRACE_LIMIT 60
 
 class Raven_WeaponSystem
 {
@@ -28,7 +27,6 @@ private:
   typedef std::map<int, Raven_Weapon*>  WeaponMap;
 
 private:
-  int m_TraceLimit = 0;
 
   Raven_Bot*       m_pOwner;
 
@@ -78,7 +76,7 @@ public:
   //this method aims the bot's current weapon at the target (if there is a
   //target) and, if aimed correctly, fires a round. (Called each update-step
   //from Raven_Bot::Update)
-  void          TakeAimAndShoot();
+  void          TakeAimAndShoot()const;
 
   //this method determines the most appropriate weapon to use given the current
   //game state. (Called every n update-steps from Raven_Bot::Update)

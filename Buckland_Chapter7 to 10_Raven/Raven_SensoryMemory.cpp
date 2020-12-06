@@ -4,8 +4,6 @@
 #include "misc/cgdi.h"
 #include "misc/Stream_Utility_Functions.h"
 
-#include "game/EntityManager.h"
-#include "Raven_Game.h"
 //------------------------------- ctor ----------------------------------------
 //-----------------------------------------------------------------------------
  Raven_SensoryMemory:: Raven_SensoryMemory(Raven_Bot* owner,
@@ -134,46 +132,6 @@ void Raven_SensoryMemory::UpdateVision()
       }
     }
   }//next bot
-}
-
-void Raven_SensoryMemory::UpdateHittedTarget(BaseGameEntity* pHitted, int id, int reducedHealth)
-{
-    for (auto iter = m_HittedTargetInfo.begin(); iter != m_HittedTargetInfo.end(); )
-    {
-        Raven_Bot* target = (Raven_Bot*)EntityMgr->GetEntityFromID(iter->first);
-        if (!(target)->isAlive() || target->isSpawning())
-        {
-            iter = m_HittedTargetInfo.erase(iter);
-        }
-        else
-            ++iter;
-    }
-    auto recentlyHitData = m_HittedTargetInfo.find(id);
-
-    std::pair<int, int> newData{ id, reducedHealth };
-
-    if (recentlyHitData != m_HittedTargetInfo.end())
-    {
-        newData.second += recentlyHitData->second;
-    }
-
-    m_HittedTargetInfo.clear();
-    m_HittedTargetInfo.insert(newData);
-}
-
-int Raven_SensoryMemory::GetRecentlyHittedOpponentID() const
-{
-    int maxKey = -1;
-    int maxValue = -1;
-    for (auto pair : m_HittedTargetInfo)
-    {
-        if (pair.second > maxValue)
-        {
-            maxValue = pair.second;
-            maxKey = pair.first;
-        }
-    }
-    return maxKey;
 }
 
 

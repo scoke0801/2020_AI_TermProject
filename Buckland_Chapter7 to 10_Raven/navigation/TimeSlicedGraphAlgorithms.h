@@ -104,6 +104,10 @@ private:
   //iPQ indexes into.
   std::vector<double>            m_FCosts;
 
+  // 깊이/깊이최대값 추가
+  std::vector<int>			     m_iDepth;
+  int                            m_iDepth_Max;
+
   std::vector<const Edge*>       m_ShortestPathTree;
   std::vector<const Edge*>       m_SearchFrontier;
 
@@ -125,15 +129,18 @@ public:
                                               m_ShortestPathTree(G.NumNodes()),                              
                                               m_SearchFrontier(G.NumNodes()),
                                               m_GCosts(G.NumNodes(), 0.0),
+                                              m_iDepth(G.NumNodes(), -1),
                                               m_FCosts(G.NumNodes(), 0.0),
                                               m_iSource(source),
-                                              m_iTarget(target)
+                                              m_iTarget(target),
+                                              m_iDepth_Max(10)
   { 
      //create the PQ   
      m_pPQ =new IndexedPriorityQLow<double>(m_FCosts, m_Graph.NumNodes());
 
     //put the source node on the queue
     m_pPQ->insert(m_iSource);
+    m_iDepth[m_iSource] = 0;
   }
 
    ~Graph_SearchAStar_TS(){delete m_pPQ;}
@@ -198,6 +205,7 @@ int Graph_SearchAStar_TS<graph_type, heuristic>::CycleOnce()
     {
       m_FCosts[pE->To()] = GCost + HCost;
       m_GCosts[pE->To()] = GCost;
+      m_iDepth[pE->To()] = m_iDepth[NextClosestNode] + 1;
 
       m_pPQ->insert(pE->To());
 
@@ -211,11 +219,18 @@ int Graph_SearchAStar_TS<graph_type, heuristic>::CycleOnce()
     {
       m_FCosts[pE->To()] = GCost + HCost;
       m_GCosts[pE->To()] = GCost;
+      m_iDepth[pE->To()] = m_iDepth[NextClosestNode] + 1;
 
       m_pPQ->ChangePriority(pE->To());
 
       m_SearchFrontier[pE->To()] = pE;
     }
+  }
+  // 검색중인 노드의 깊이가 제한된 깊이보다 크거나 같으면 
+  // 타겟을 검색중인 노드로 바꾸고 리턴
+  if (m_iDepth[NextClosestNode] >= m_iDepth_Max) {
+      m_iTarget = NextClosestNode;
+      return target_found;
   }
   
   //there are still nodes to explore

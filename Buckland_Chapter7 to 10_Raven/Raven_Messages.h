@@ -20,8 +20,7 @@ enum message_type
   Msg_GoalQueueEmpty,
   Msg_OpenSesame,
   Msg_GunshotSound,
-  Msg_UserHasRemovedBot,
-  Msg_HitTarget,
+  Msg_UserHasRemovedBot
 };
 
 //used for outputting debug info

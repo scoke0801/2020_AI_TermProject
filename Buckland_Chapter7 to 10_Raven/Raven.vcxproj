@@ -64,14 +64,16 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../common;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\gusl0\Desktop\Buckland\VS8 projects\Common;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>../common;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\gusl0\Desktop\Buckland\VS8 projects\Common;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\zx072\OneDrive\바탕 화면\새 폴더 (9)\AI_기~1\Common;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\zx072\OneDrive\바탕 화면\새 폴더 (9)\AI_기~1\Common;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='boundschecker|Win32'">
     <Midl>

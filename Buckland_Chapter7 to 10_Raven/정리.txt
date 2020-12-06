@@ -1,0 +1,63 @@
+메인 업데이트 구문 구조
+
+1. 무덤 표시
+2. 플레이어 입력처리
+3. 경로 찾기
+4. 탄환 업데이트[Bot들이 발사한 탄환을 업데이트 하는것]
+5. Bot 업데이트
+    5-1. 리스폰 가능한 Bot들 리스폰
+    5-2.    
+void Raven_Game::Update()
+{   
+    //update the bots
+    bool bSpawnPossible = true;
+
+    std::list<Raven_Bot*>::iterator curBot = m_Bots.begin();
+    for (curBot; curBot != m_Bots.end(); ++curBot)
+    {
+        //if this bot's status is 'respawning' attempt to resurrect it from
+        //an unoccupied spawn point
+        if ((*curBot)->isSpawning() && bSpawnPossible)
+        {
+            bSpawnPossible = AttemptToAddBot(*curBot);
+        }
+
+        //if this bot's status is 'dead' add a grave at its current location 
+        //then change its status to 'respawning'
+        else if ((*curBot)->isDead())
+        {
+            //create a grave
+            m_pGraveMarkers->AddGrave((*curBot)->Pos());
+
+            //change its status to spawning
+            (*curBot)->SetSpawning();
+        }
+
+        //if this bot is alive update it.
+        else if ((*curBot)->isAlive())
+        {
+            (*curBot)->Update();
+        }
+    }
+
+    // 아이템들을 업데이트.
+    //update the triggers
+    m_pMap->UpdateTriggerSystem(m_Bots);
+
+    //if the user has requested that
+    // the number of bots be decreased, remove one
+    if (m_bRemoveABot)
+    {
+        if (!m_Bots.empty())
+        {
+            Raven_Bot* pBot = m_Bots.back();
+            if (pBot == m_pSelectedBot)m_pSelectedBot = 0;
+            NotifyAllBotsOfRemoval(pBot);
+            delete m_Bots.back();
+            m_Bots.remove(pBot);
+            pBot = 0;
+        }
+
+        m_bRemoveABot = false;
+    }
+}
