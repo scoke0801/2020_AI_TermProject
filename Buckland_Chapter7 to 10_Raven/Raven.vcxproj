@@ -64,9 +64,9 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\gusl0\Desktop\Buckland\VS8 projects\Common;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\xogns\Documents\GitHub\2020_AI_TermProject\Common;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\Users\gusl0\Desktop\Buckland\VS8 projects\Common;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\xogns\Documents\GitHub\2020_AI_TermProject\Common;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\Release\</OutDir>
@@ -248,6 +248,7 @@
     <ClCompile Include="goals\Goal_HuntTarget.cpp" />
     <ClCompile Include="goals\Goal_MoveToPosition.cpp" />
     <ClCompile Include="goals\Goal_NegotiateDoor.cpp" />
+    <ClCompile Include="goals\Goal_RunAway.cpp" />
     <ClCompile Include="goals\Goal_SayPhrase.cpp" />
     <ClCompile Include="goals\Goal_SeekToPosition.cpp" />
     <ClCompile Include="goals\Goal_Think.cpp" />
@@ -255,6 +256,7 @@
     <ClCompile Include="goals\Goal_Wander.cpp" />
     <ClCompile Include="goals\Raven_Feature.cpp" />
     <ClCompile Include="goals\Raven_Goal_Types.cpp" />
+    <ClCompile Include="goals\RunAwayGoal_Evaluator.cpp" />
     <ClCompile Include="GraveMarkers.cpp" />
     <ClCompile Include="lua\Raven_Scriptor.cpp" />
     <ClCompile Include="main.cpp" />
@@ -355,6 +357,7 @@
     <ClInclude Include="goals\Goal_HuntTarget.h" />
     <ClInclude Include="goals\Goal_MoveToPosition.h" />
     <ClInclude Include="goals\Goal_NegotiateDoor.h" />
+    <ClInclude Include="goals\Goal_RunAway.h" />
     <ClInclude Include="goals\Goal_SayPhrase.h" />
     <ClInclude Include="goals\Goal_SeekToPosition.h" />
     <ClInclude Include="goals\Goal_Think.h" />
@@ -362,6 +365,7 @@
     <ClInclude Include="goals\Goal_Wander.h" />
     <ClInclude Include="goals\Raven_Feature.h" />
     <ClInclude Include="goals\Raven_Goal_Types.h" />
+    <ClInclude Include="goals\RunAwayGoal_Evaluator.h" />
     <ClInclude Include="GraveMarkers.h" />
     <ClInclude Include="lua\Raven_Scriptor.h" />
     <ClInclude Include="navigation\PathEdge.h" />

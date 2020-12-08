@@ -11,12 +11,14 @@
 #include "Goal_Wander.h"
 #include "Raven_Goal_Types.h"
 #include "Goal_AttackTarget.h"
+#include "Goal_RunAway.h"
 
 
 #include "GetWeaponGoal_Evaluator.h"
 #include "GetHealthGoal_Evaluator.h"
 #include "ExploreGoal_Evaluator.h"
 #include "AttackTargetGoal_Evaluator.h"
+#include "RunAwayGoal_Evaluator.h"
 
 
 Goal_Think::Goal_Think(Raven_Bot* pBot) :Goal_Composite<Raven_Bot>(pBot, goal_think)
@@ -32,6 +34,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot) :Goal_Composite<Raven_Bot>(pBot, goal_th
     double RailgunBias        = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double ExploreBias        = RandInRange(LowRangeOfBias, HighRangeOfBias);
     double AttackBias         = RandInRange(LowRangeOfBias, HighRangeOfBias);
+    double RunAwayBias = RandInRange(LowRangeOfBias, HighRangeOfBias);
 
     //create the evaluator objects
     m_Evaluators.push_back(new GetHealthGoal_Evaluator(HealthBias));
@@ -40,6 +43,7 @@ Goal_Think::Goal_Think(Raven_Bot* pBot) :Goal_Composite<Raven_Bot>(pBot, goal_th
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(ShotgunBias, type_shotgun));
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RailgunBias, type_rail_gun));
     m_Evaluators.push_back(new GetWeaponGoal_Evaluator(RocketLauncherBias, type_rocket_launcher));
+    m_Evaluators.push_back(new RunAwayGoal_Evaluator(RunAwayBias));
 }
 
 //----------------------------- dtor ------------------------------------------
@@ -164,6 +168,15 @@ void Goal_Think::AddGoal_AttackTarget()
     // 새로운 Goal을 설정해줌.
     AddSubgoal( new Goal_AttackTarget(m_pOwner));
   }
+}
+
+void Goal_Think::AddGoal_RunAwayGoal()
+{
+    if (notPresent(goal_run_away))
+    {
+        RemoveAllSubgoals();
+        AddSubgoal(new Goal_RunAway(m_pOwner));
+    }
 }
 
 //-------------------------- Queue Goals --------------------------------------
