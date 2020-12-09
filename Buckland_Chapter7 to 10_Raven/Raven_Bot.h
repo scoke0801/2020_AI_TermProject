@@ -16,7 +16,7 @@
 #include "game/MovingEntity.h"
 #include "misc/utils.h"
 #include "Raven_TargetingSystem.h"
-
+#include "game/EntityManager.h"
 
 class Raven_PathPlanner;
 class Raven_Steering;
@@ -28,7 +28,6 @@ class Raven_Bot;
 class Goal_Think;
 class Raven_WeaponSystem;
 class Raven_SensoryMemory;
-
 
 
 

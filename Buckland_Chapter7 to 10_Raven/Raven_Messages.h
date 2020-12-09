@@ -19,7 +19,8 @@ enum message_type
   Msg_YouGotMeYouSOB,
   Msg_GoalQueueEmpty,
   Msg_OpenSesame,
-  Msg_GunshotSound,
+  Msg_GunshotSound, 
+  Msg_HitTarget,
   Msg_UserHasRemovedBot
 };
 

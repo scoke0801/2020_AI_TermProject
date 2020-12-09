@@ -9,7 +9,7 @@
 #include "Raven_Game.h"
 #include "Raven_UserOptions.h"
 #include "2D/transformations.h"
-
+#include "Raven_SensoryMemory.h"
 
 
 //------------------------- ctor ----------------------------------------------
@@ -173,7 +173,7 @@ void Raven_WeaponSystem::ChangeWeapon(unsigned int type)
 //  this method aims the bots current weapon at the target (if there is a
 //  target) and, if aimed correctly, fires a round
 //-----------------------------------------------------------------------------
-void Raven_WeaponSystem::TakeAimAndShoot()const
+void Raven_WeaponSystem::TakeAimAndShoot()
 {
   //aim the weapon only if the current target is shootable or if it has only
   //very recently gone out of view (this latter condition is to ensure the 
@@ -222,13 +222,19 @@ void Raven_WeaponSystem::TakeAimAndShoot()const
         GetCurrentWeapon()->ShootAt(AimingPos);
       }
     }
-
+    m_TraceLimit = 0;
   }
   
   //no target to shoot at so rotate facing to be parallel with the bot's
   //heading direction
   else
   {
+      m_TraceLimit++;
+      if (m_TraceLimit > TRACE_LIMIT)
+      {
+          m_TraceLimit = 0;
+          m_pOwner->GetSensoryMem()->CleanRecentlyTarget();
+      }
     m_pOwner->RotateFacingTowardPosition(m_pOwner->Pos()+ m_pOwner->Heading());
   }
 }

@@ -226,6 +226,7 @@ bool Raven_Bot::isReadyForTriggerUpdate()const
 //-----------------------------------------------------------------------------
 bool Raven_Bot::HandleMessage(const Telegram& msg)
 {
+    int ExtraInfo = -1;
   //first see if the current goal accepts the message
   if (GetBrain()->HandleMessage(msg)) return true;
  
@@ -236,7 +237,7 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
 
     //just return if already dead or spawning
     if (isDead() || isSpawning()) return true;
-
+    ExtraInfo = DereferenceToType<int>(msg.ExtraInfo);
     //the extra info field of the telegram carries the amount of damage
     ReduceHealth(DereferenceToType<int>(msg.ExtraInfo));
 
@@ -249,7 +250,14 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
                               Msg_YouGotMeYouSOB,
                               NO_ADDITIONAL_INFO);
     }
-
+    else // if this bot is hitted let the shooter know
+    {
+        Dispatcher->DispatchMsg(SEND_MSG_IMMEDIATELY,
+            ID(),
+            msg.Sender,
+            Msg_HitTarget,
+            msg.ExtraInfo);
+    }
     return true;
 
   case Msg_YouGotMeYouSOB:
@@ -260,7 +268,14 @@ bool Raven_Bot::HandleMessage(const Telegram& msg)
     m_pTargSys->ClearTarget();
 
     return true;
+  case Msg_HitTarget:
+  {
+      auto target = EntityMgr->GetEntityFromID(msg.Receiver);
+      unsigned int reducedHealth = DereferenceToType<int>(msg.ExtraInfo);
+      GetSensoryMem()->UpdateHittedTarget(target, msg.Sender, reducedHealth);
 
+      return true;
+  }
   case Msg_GunshotSound:
 
     //add the source of this sound to the bot's percepts
